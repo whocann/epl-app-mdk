@@ -1,0 +1,67 @@
+{
+	"Caption": "Matches Details",
+
+	"ActionBar": {
+		"Items": []
+	},
+	"Controls": [{
+		"Sections": [{
+			"ObjectHeader": {
+				"DetailImage": "",
+				"HeadlineText": "{matchDate}",
+				"Subhead": "{homeTeam_ID}",
+				"Tags": [],
+				"BodyText": "",
+				"Footnote": "{homeTeamScore}",
+				"Description": "",
+				"StatusText": "{awayTeam_ID}",
+				"StatusImage": "",
+				"SubstatusImage": "",
+				"SubstatusText": "{awayTeam_ID}"
+			},
+			"_Type": "Section.Type.ObjectHeader"
+		}, {
+			"KeyAndValues": [{
+				"KeyName": "modifiedAt",
+				"Value": "{modifiedAt}"
+			}, {
+				"KeyName": "createdAt",
+				"Value": "{createdAt}"
+			}, {
+				"KeyName": "createdBy",
+				"Value": "{createdBy}"
+			}, {
+				"KeyName": "modifiedBy",
+				"Value": "{modifiedBy}"
+			}, {
+				"KeyName": "ID",
+				"Value": "{ID}"
+			}, {
+				"KeyName": "matchDate",
+				"Value": "{matchDate}"
+			}, {
+				"KeyName": "homeTeamScore",
+				"Value": "{homeTeamScore}"
+			}, {
+				"KeyName": "awayTeamScore",
+				"Value": "{awayTeamScore}"
+			}, {
+				"KeyName": "homeTeam_ID",
+				"Value": "{homeTeam_ID}"
+			}, {
+				"KeyName": "awayTeam_ID",
+				"Value": "{awayTeam_ID}"
+			}],
+			"Layout": {
+				"NumberOfColumns": 2
+			},
+			"MaxItemCount": 1,
+			"_Name": "SectionKeyValue0",
+			"_Type": "Section.Type.KeyValue"
+		}],
+		"_Type": "Control.Type.SectionedTable",
+		"_Name": "SectionedTable"
+	}],
+	"_Type": "Page",
+	"_Name": "Matches_Detail"
+}

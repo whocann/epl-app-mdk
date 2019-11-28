@@ -1,0 +1,40 @@
+{
+	"Caption": "#EPL-APP",
+	"Controls": [
+		{
+			"Sections": [
+				{
+					"Buttons": [
+						{
+							"OnPress": "/EplAppMDK/Actions/Matches/NavToMatches_List.action",
+							"TextAlignment": "center",
+							"Title": "Matches"
+						}
+					],
+					"EmptySection": {
+						"FooterVisible": false
+					},
+					"_Name": "SectionButtonTable0",
+					"_Type": "Section.Type.ButtonTable"
+				}
+			],
+			"_Name": "SectionedTable0",
+			"_Type": "Control.Type.SectionedTable"
+		}
+	],
+	"ToolBar": {
+		"Controls": [
+			{
+				"Caption": "Logout",
+				"Clickable": true,
+				"Enabled": true,
+				"OnPress": "/EplAppMDK/Actions/Logout.action",
+				"Visible": true,
+				"_Name": "LogoutToolbarItem",
+				"_Type": "Control.Type.ToolbarItem"
+			}
+		]
+	},
+	"_Name": "Main",
+	"_Type": "Page"
+}

@@ -1,0 +1,44 @@
+{
+	"Caption": "Matches",
+	"Controls": [
+		{
+			"Sections": [
+				{
+					"EmptySection": {
+						"FooterVisible": false
+					},
+					"Header": {
+						"UseTopPadding": false
+					},
+					"ObjectCell": {
+						"AccessoryType": "disclosureIndicator",
+						"DetailImageIsCircular": false,
+						"Footnote": "{{#Property:awayTeam/#Property:name}} {{#Property:awayTeamScore}}",
+						"OnPress": "/EplAppMDK/Actions/Matches/NavToMatches_Detail.action",
+						"PreserveIconStackSpacing": false,
+						"Subhead": "{{#Property:homeTeam/#Property:name}} {{#Property:homeTeamScore}}",
+						"Title": "$(D,{matchDate})"
+					},
+					"Search": {
+						"BarcodeScanner": true,
+						"Delay": 500,
+						"Enabled": true,
+						"MinimumCharacterThreshold": 3,
+						"Placeholder": "Item Search"
+					},
+					"Target": {
+						"EntitySet": "Matches",
+						"QueryOptions": "$expand=homeTeam,awayTeam&$orderby=matchDate desc",
+						"Service": "/EplAppMDK/Services/EplAppMDK.service"
+					},
+					"_Name": "SectionObjectTable0",
+					"_Type": "Section.Type.ObjectTable"
+				}
+			],
+			"_Name": "SectionedTable",
+			"_Type": "Control.Type.SectionedTable"
+		}
+	],
+	"_Name": "Matches_List",
+	"_Type": "Page"
+}

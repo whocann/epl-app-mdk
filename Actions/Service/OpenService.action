@@ -1,0 +1,9 @@
+{
+	"Service": "/EplAppMDK/Services/EplAppMDK.service",
+	"_Type": "Action.Type.ODataService.Open",
+	"OnSuccess": "/EplAppMDK/Actions/Service/CreateOpenServiceSuccessMessage.action",
+	"OnFailure": "/EplAppMDK/Actions/Service/CreateOpenServiceFailureMessage.action",
+	"ActionResult": {
+		"_Name": "init"
+	}
+}

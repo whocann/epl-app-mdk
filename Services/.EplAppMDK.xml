@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+	<Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+		<Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+	</Reference>
+	<Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2">
+		<Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+	</Reference>
+	<Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+		<Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+	</Reference>
+	<Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2">
+		<Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+	</Reference>
+	<DataServices>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.epl.CatalogService">
+			<EntityContainer Name="EntityContainer">
+				<EntitySet Name="Matches" EntityType="com.epl.CatalogService.Matches">
+					<NavigationPropertyBinding Path="homeTeam" Target="Teams"/>
+					<NavigationPropertyBinding Path="awayTeam" Target="Teams"/>
+				</EntitySet>
+				<EntitySet Name="Teams" EntityType="com.epl.CatalogService.Teams">
+					<NavigationPropertyBinding Path="texts" Target="Teams_texts"/>
+					<NavigationPropertyBinding Path="localized" Target="Teams_texts"/>
+				</EntitySet>
+				<EntitySet Name="Teams_texts" EntityType="com.epl.CatalogService.Teams_texts"/>
+			</EntityContainer>
+			<EntityType Name="Matches">
+				<Key>
+					<PropertyRef Name="ID"/>
+				</Key>
+				<Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+				<Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+				<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="ID" Type="Edm.String" Nullable="false"/>
+				<Property Name="matchDate" Type="Edm.Date"/>
+				<NavigationProperty Name="homeTeam" Type="com.epl.CatalogService.Teams">
+					<ReferentialConstraint Property="homeTeam_ID" ReferencedProperty="ID"/>
+				</NavigationProperty>
+				<NavigationProperty Name="awayTeam" Type="com.epl.CatalogService.Teams">
+					<ReferentialConstraint Property="awayTeam_ID" ReferencedProperty="ID"/>
+				</NavigationProperty>
+				<Property Name="homeTeamScore" Type="Edm.Int32"/>
+				<Property Name="awayTeamScore" Type="Edm.Int32"/>
+				<Property Name="homeTeam_ID" Type="Edm.Int32"/>
+				<Property Name="awayTeam_ID" Type="Edm.Int32"/>
+			</EntityType>
+			<EntityType Name="Teams">
+				<Key>
+					<PropertyRef Name="ID"/>
+				</Key>
+				<Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+				<Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+				<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="name" Type="Edm.String" MaxLength="255"/>
+				<Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+				<Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+				<NavigationProperty Name="texts" Type="Collection(com.epl.CatalogService.Teams_texts)">
+					<OnDelete Action="Cascade"/>
+				</NavigationProperty>
+				<NavigationProperty Name="localized" Type="com.epl.CatalogService.Teams_texts">
+					<ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+				</NavigationProperty>
+			</EntityType>
+			<EntityType Name="Teams_texts">
+				<Key>
+					<PropertyRef Name="locale"/>
+					<PropertyRef Name="ID"/>
+				</Key>
+				<Property Name="locale" Type="Edm.String" MaxLength="5" Nullable="false"/>
+				<Property Name="name" Type="Edm.String" MaxLength="255"/>
+				<Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+				<Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+			</EntityType>
+			<Annotations Target="com.epl.CatalogService.Matches">
+				<Annotation Term="UI.Identification">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" String="Matches"/>
+						</Record>
+					</Collection>
+				</Annotation>
+				<Annotation Term="UI.LineItem">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="matchDate"/>
+							<PropertyValue Property="Label" String="Match Date"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="homeTeam/name"/>
+							<PropertyValue Property="Label" String="Home Team"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="homeTeamScore"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" String=":"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="awayTeamScore"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="awayTeam/name"/>
+							<PropertyValue Property="Label" String="Away Team"/>
+						</Record>
+					</Collection>
+				</Annotation>
+				<Annotation Term="UI.SelectionFields">
+					<Collection>
+						<PropertyPath>matchDate</PropertyPath>
+						<PropertyPath>homeTeam_ID</PropertyPath>
+						<PropertyPath>awayTeam_ID</PropertyPath>
+					</Collection>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.EntityContainer/Matches">
+				<Annotation Term="Capabilities.DeleteRestrictions">
+					<Record Type="Capabilities.DeleteRestrictionsType">
+						<PropertyValue Property="Deletable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.InsertRestrictions">
+					<Record Type="Capabilities.InsertRestrictionsType">
+						<PropertyValue Property="Insertable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.UpdateRestrictions">
+					<Record Type="Capabilities.UpdateRestrictionsType">
+						<PropertyValue Property="Updatable" Bool="false"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Matches/modifiedAt">
+				<Annotation Term="Common.Label" String="Changed At"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Matches/createdAt">
+				<Annotation Term="Common.Label" String="Created At"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Matches/createdBy">
+				<Annotation Term="Common.Label" String="Created By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="A user's unique ID"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Matches/modifiedBy">
+				<Annotation Term="Common.Label" String="Changed By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="A user's unique ID"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Matches/matchDate">
+				<Annotation Term="Common.Label" String="Match Date"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Matches/homeTeam">
+				<Annotation Term="Common.Label" String="Home Team"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="CollectionPath" String="Teams"/>
+						<PropertyValue Property="Label" String="Home Team"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="homeTeam_ID"/>
+									<PropertyValue Property="ValueListProperty" String="ID"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="name"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Matches/awayTeam">
+				<Annotation Term="Common.Label" String="Away Team"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="Label" String="Away Team"/>
+						<PropertyValue Property="CollectionPath" String="Teams"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="awayTeam_ID"/>
+									<PropertyValue Property="ValueListProperty" String="ID"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="name"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Matches/homeTeam_ID">
+				<Annotation Term="Common.Label" String="Home Team"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="CollectionPath" String="Teams"/>
+						<PropertyValue Property="Label" String="Home Team"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="homeTeam_ID"/>
+									<PropertyValue Property="ValueListProperty" String="ID"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="name"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Matches/awayTeam_ID">
+				<Annotation Term="Common.Label" String="Away Team"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="Label" String="Away Team"/>
+						<PropertyValue Property="CollectionPath" String="Teams"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="awayTeam_ID"/>
+									<PropertyValue Property="ValueListProperty" String="ID"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="name"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Teams">
+				<Annotation Term="UI.Identification">
+					<Collection>
+						<Path>name</Path>
+					</Collection>
+				</Annotation>
+				<Annotation Term="UI.LineItem">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="ID"/>
+							<PropertyValue Property="Label" String="ID"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="name"/>
+							<PropertyValue Property="Label" String="Name"/>
+						</Record>
+					</Collection>
+				</Annotation>
+				<Annotation Term="UI.SelectionFields">
+					<Collection>
+						<PropertyPath>name</PropertyPath>
+					</Collection>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.EntityContainer/Teams">
+				<Annotation Term="Capabilities.DeleteRestrictions">
+					<Record Type="Capabilities.DeleteRestrictionsType">
+						<PropertyValue Property="Deletable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.InsertRestrictions">
+					<Record Type="Capabilities.InsertRestrictionsType">
+						<PropertyValue Property="Insertable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.UpdateRestrictions">
+					<Record Type="Capabilities.UpdateRestrictionsType">
+						<PropertyValue Property="Updatable" Bool="false"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Teams/modifiedAt">
+				<Annotation Term="Common.Label" String="Changed At"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Teams/createdAt">
+				<Annotation Term="Common.Label" String="Created At"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Teams/createdBy">
+				<Annotation Term="Common.Label" String="Created By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="A user's unique ID"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Teams/modifiedBy">
+				<Annotation Term="Common.Label" String="Changed By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="A user's unique ID"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Teams/name">
+				<Annotation Term="Common.Label" String="Name"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Teams/descr">
+				<Annotation Term="Common.Label" String="Description"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Teams/ID">
+				<Annotation Term="Common.Label" String="ID"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Teams_texts/name">
+				<Annotation Term="Common.Label" String="Name"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Teams_texts/descr">
+				<Annotation Term="Common.Label" String="Description"/>
+			</Annotations>
+			<Annotations Target="com.epl.CatalogService.Teams_texts/ID">
+				<Annotation Term="Common.Label" String="Home Team"/>
+			</Annotations>
+		</Schema>
+	</DataServices>
+</Edmx>

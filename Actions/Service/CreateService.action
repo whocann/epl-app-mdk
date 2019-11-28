@@ -1,0 +1,11 @@
+{
+	"_Type": "Action.Type.ODataService.Create",
+	"Service": "/EplAppMDK/Services/EplAppMDK.service",
+	"OnSuccess": "/EplAppMDK/Actions/Service/OpenService.action",
+	"OnFailure": "/EplAppMDK/Actions/Service/CreateOpenServiceFailureMessage.action",
+	"ShowActivityIndicator": true,
+	"ActivityIndicatorText": "Initializing Application...",
+	"ActionResult": {
+		"_Name": "init"
+	}
+}
